@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+  <title>OBJECTION!</title>
+  <script>
+    var audioElements = [];
+
+    function shuffle(o){ //v1.0
+      for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+      return o;
+    };
+
+    function prepareNextObjection() {
+      setTimeout(function() {
+        shuffle(audioElements);
+        audioElements[0].play();
+        prepareNextObjection();
+      }, Math.random() * 1 * 15000 + 1000)
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      audioElementsNodeList = document.getElementsByTagName('audio');
+      for (var i = 0; i < audioElementsNodeList.length; i++) {
+        audioElements.push(audioElementsNodeList[i]);
+      }
+
+      prepareNextObjection();
+    });
+
+  
+  </script>
+</head>
+<body>
+  <audio src="english/objection (1).wav">No audio tag support in your browser :(</audio>
+  <audio src="english/objection (2).wav">No audio tag support in your browser :(</audio>
+  <audio src="english/objection (3).wav">No audio tag support in your browser :(</audio>
+  <audio src="english/objection (4).wav">No audio tag support in your browser :(</audio>
+  <audio src="english/objection (5).wav">No audio tag support in your browser :(</audio>
+  <audio src="english/objection (6).wav">No audio tag support in your browser :(</audio>
+  <audio src="english/objection (7).wav">No audio tag support in your browser :(</audio>
+  <audio src="english/objection (8).wav">No audio tag support in your browser :(</audio>
+  <audio src="english/objection (9).wav">No audio tag support in your browser :(</audio>
+  <audio src="english/objection (10).wav">No audio tag support in your browser :(</audio>
+  <audio src="english/objection (11).wav">No audio tag support in your browser :(</audio>
+  <audio src="english/objection (12).wav">No audio tag support in your browser :(</audio>
+</body>
+</html>
