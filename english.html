@@ -2,84 +2,111 @@
 <html>
 <head>
   <title>OBJECTION!</title>
+  <style type="text/css">
+    #objection {
+      transition: all 100ms ease-out;
+      z-index: -1;
+    }
+    .big {
+      -moz-transform: scale(1.3, 1.3);
+    }
+    .small {
+      -moz-transform: scale(0.5, 0.5);
+    }
+  </style>
   <script>
+    var LEFT = 'left';
+    var RIGHT = 'right';
     var objectionObjects = [];
     var characterPics = {
       phoenix: {
         picture: "phoenix.gif",
-        facing: "right"
+        facing: RIGHT
       },
       miles: {
         picture: "miles.gif",
-        facing: "left"
+        facing: LEFT
       },
       manfred: {
         picture: "manfred.gif",
-        facing: "left"
+        facing: LEFT
       },
       franziska: {
         picture: "franziska.gif",
-        facing: "left"
+        facing: LEFT
       },
       godot: {
         picture: "godot.gif",
-        facing: "left"
+        facing: LEFT
       },
       mia: {
         picture: "mia.gif",
-        facing: "right"
+        facing: RIGHT
       },
       calisto: {
         picture: "calisto.gif",
-        facing: "left"
+        facing: LEFT
       },
       quercus: {
         picture: "quercus.gif",
-        facing: "left"
+        facing: LEFT
       },
       jacques: {
         picture: "jacques.gif",
-        facing: "left"
+        facing: LEFT
       },
       klavier: {
         picture: "klavier.gif",
-        facing: "left"
+        facing: LEFT
       },
       kristoph: {
         picture: "kristoph.gif",
-        facing: "left"
+        facing: LEFT
       },
       calisto: {
         picture: "calisto.gif",
-        facing: "left"
+        facing: LEFT
       },
       winston: {
         picture: "winston.gif",
-        facing: "left"
+        facing: LEFT
       },
       apollo: {
         picture: "apollo.gif",
-        facing: "right"
+        facing: RIGHT
       }
     }
 
-    function replaceImgElement(picture, div) {
+    var nextPosition = LEFT;
+    var nextDiv = 'leftCharacter';
+
+    function replaceImgElement(objectionObject, div) {
       var img=document.createElement('img');
-      img.setAttribute('src', 'pictures/' + picture);
+      img.setAttribute('src', 'pictures/' + objectionObject.picture);
       img.setAttribute('height', '200');
+      if (nextPosition === objectionObject.facing) {
+        img.style.transform = 'scale(-1, 1)';
+      }
       div.replaceChild(img, div.firstChild);
     }
 
     function prepareNextObjection() {
       setTimeout(function() {
+        requiredDivId = (nextPosition === LEFT) ? 'leftCharacter' : 'rightCharacter';
         var random = Math.floor(Math.random() * objectionObjects.length);
         var objectionObject = objectionObjects[random];
-        console.log(objectionObjects[random])
-        var requiredDivId = objectionObject.facing === "right" ? 'leftCharacter' : 'rightCharacter';
-        replaceImgElement(objectionObject.picture, document.getElementById(requiredDivId));
+        replaceImgElement(objectionObject, document.getElementById(requiredDivId));
         objectionObject.audioElement.play();
+
+        if (nextPosition === LEFT){
+          nextPosition = RIGHT;
+          nextDiv = 'rightCharacter';
+        } else {
+          nextPosition = LEFT;
+          nextDiv = 'leftCharacter';
+        }
         prepareNextObjection();
-      }, Math.random() * 15000 + 1000)
+      }, Math.random() * 13000 + 2000)
     }
 
     document.addEventListener("DOMContentLoaded", function() {
@@ -90,6 +117,12 @@
           audioElement: audioElementsNodeList[i],
           picture: characterPics[character].picture,
           facing: characterPics[character].facing
+        });
+        audioElementsNodeList[i].addEventListener('play', function() {
+          document.getElementById('objection').className = 'big';
+        });
+        audioElementsNodeList[i].addEventListener('pause', function() {
+          document.getElementById('objection').className = 'small';
         });
       }
 
@@ -104,9 +137,9 @@
     <img src="pictures/objection.png" alt="OBJECTION" height="400" />
   </header>
   <div style="text-align:center;">
-    <span id="leftCharacter"><img src="pictures/objection.png" height="200" /></span>
-    <span id="centerStuff"><img src="pictures/objection.png" height="200" /></span>
-    <span id="rightCharacter"><img src="pictures/objection.png" height="200" /></span>
+    <span id="leftCharacter"><img src="pictures/badger.gif" height="250" /></span>
+    <img id="objection" src="pictures/objection.png" height="250" />
+    <span id="rightCharacter"><img src="pictures/badger.gif" height="250" /></span>
   </div>
   <div>
     <audio class="quercus" src="english/objection (1).wav">No audio tag support in your browser :(</audio>
