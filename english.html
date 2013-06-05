@@ -3,69 +3,94 @@
 <head>
   <title>OBJECTION!</title>
   <script>
-    var objectionObjects = {
+    var objectionObjects = [];
+    var characterPics = {
       phoenix: {
-        picture: "phoenix.jpg"
+        picture: "phoenix.gif",
+        facing: "right"
       },
       miles: {
-        picture: "miles.jpg"
+        picture: "miles.gif",
+        facing: "left"
       },
       manfred: {
-        picture: "manfred.jpg"
+        picture: "manfred.gif",
+        facing: "left"
       },
       franziska: {
-        picture: "franziska.jpg"
+        picture: "franziska.gif",
+        facing: "left"
       },
       godot: {
-        picture: "godot.jpg"
+        picture: "godot.gif",
+        facing: "left"
       },
       mia: {
-        picture: "mia.jpg"
+        picture: "mia.gif",
+        facing: "right"
       },
       calisto: {
-        picture: "calisto.jpg"
+        picture: "calisto.gif",
+        facing: "left"
       },
       quercus: {
-        picture: "quercus.jpg"
+        picture: "quercus.gif",
+        facing: "left"
       },
       jacques: {
-        picture: "jacques.jpg"
+        picture: "jacques.gif",
+        facing: "left"
       },
       klavier: {
-        picture: "klavier.jpg"
+        picture: "klavier.gif",
+        facing: "left"
       },
       kristoph: {
-        picture: "kristoph.jpg"
+        picture: "kristoph.gif",
+        facing: "left"
       },
       calisto: {
-        picture: "calisto.jpg"
+        picture: "calisto.gif",
+        facing: "left"
       },
       winston: {
-        picture: "winston.jpg"
+        picture: "winston.gif",
+        facing: "left"
       },
       apollo: {
-        picture: "apollo.jpg"
+        picture: "apollo.gif",
+        facing: "right"
       }
     }
-    var audioElements = [];
 
-    function shuffle(o){ //v1.0
-      for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
-      return o;
-    };
+    function replaceImgElement(picture, div) {
+      var img=document.createElement('img');
+      img.setAttribute('src', 'pictures/' + picture);
+      img.setAttribute('height', '200');
+      div.replaceChild(img, div.firstChild);
+    }
 
     function prepareNextObjection() {
       setTimeout(function() {
-        shuffle(audioElements);
-        audioElements[0].play();
+        var random = Math.floor(Math.random() * objectionObjects.length);
+        var objectionObject = objectionObjects[random];
+        console.log(objectionObjects[random])
+        var requiredDivId = objectionObject.facing === "right" ? 'leftCharacter' : 'rightCharacter';
+        replaceImgElement(objectionObject.picture, document.getElementById(requiredDivId));
+        objectionObject.audioElement.play();
         prepareNextObjection();
-      }, Math.random() * 1 * 15000 + 1000)
+      }, Math.random() * 15000 + 1000)
     }
 
     document.addEventListener("DOMContentLoaded", function() {
       audioElementsNodeList = document.getElementsByTagName('audio');
       for (var i = 0; i < audioElementsNodeList.length; i++) {
-        audioElements.push(audioElementsNodeList[i]);
+        character = audioElementsNodeList[i].className;
+        objectionObjects.push({
+          audioElement: audioElementsNodeList[i],
+          picture: characterPics[character].picture,
+          facing: characterPics[character].facing
+        });
       }
 
       prepareNextObjection();
@@ -79,9 +104,9 @@
     <img src="pictures/objection.png" alt="OBJECTION" height="400" />
   </header>
   <div style="text-align:center;">
-    <div id="leftCharacter"></div>
-    <div id="centerStuff"></div>
-    <div id="rightCharacter"></div>
+    <span id="leftCharacter"><img src="pictures/objection.png" height="200" /></span>
+    <span id="centerStuff"><img src="pictures/objection.png" height="200" /></span>
+    <span id="rightCharacter"><img src="pictures/objection.png" height="200" /></span>
   </div>
   <div>
     <audio class="quercus" src="english/objection (1).wav">No audio tag support in your browser :(</audio>
