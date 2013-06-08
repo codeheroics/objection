@@ -23,6 +23,8 @@
   <script>
     var LEFT = 'left';
     var RIGHT = 'right';
+    var leftCharacter = {};
+    var rightCharacter = {};
     var objectionObjects = [];
     var characterPics = {
       phoenix: {
@@ -86,6 +88,14 @@
     var nextPosition = LEFT;
     var nextDiv = 'leftCharacter';
 
+    function getRandomInteger(max, previousRandom) {
+      var random = Math.floor(Math.random() * Math.abs(max));
+      if (previousRandom === random && max > 0) {
+        return getRandomInteger(max, previousRandom);
+      }
+      return random;
+    }
+
     function replaceImgElement(objectionObject, div) {
       var img=document.createElement('img');
       img.setAttribute('src', 'pictures/' + objectionObject.picture);
@@ -96,15 +106,18 @@
       div.replaceChild(img, div.firstChild);
     }
 
+    var previousRandomCharacterId = null;
     function prepareNextObjection() {
       setTimeout(function() {
-        requiredDivId = (nextPosition === LEFT) ? 'leftCharacter' : 'rightCharacter';
-        var random = Math.floor(Math.random() * objectionObjects.length);
-        var objectionObject = objectionObjects[random];
+        var requiredDivId = (nextPosition === LEFT) ? 'leftCharacter' : 'rightCharacter';
+        var randomCharacterId = getRandomInteger(objectionObjects.length, previousRandomCharacterId);
+        var objectionObject = objectionObjects[randomCharacterId];
+        previousRandomCharacterId = randomCharacterId;
+
         replaceImgElement(objectionObject, document.getElementById(requiredDivId));
         objectionObject.audioElement.play();
 
-        if (nextPosition === LEFT){
+        if (nextPosition === LEFT) {
           document.getElementById('leftQuote').textContent = quotes[Math.floor(Math.random() * quotes.length)];
           nextPosition = RIGHT;
           nextDiv = 'rightCharacter';
