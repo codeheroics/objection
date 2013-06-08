@@ -2,156 +2,10 @@
 <html>
 <head>
   <title>OBJECTION!</title>
-  <style type="text/css">
-    #objection {
-      transition: all 100ms ease-out;
-      z-index: -1;
-    }
-    .big {
-      -moz-transform: scale(1.3);
-    }
-    .small {
-      -moz-transform: scale(0);
-    }
-    .quote {
-      background-color: #FFF;
-      border-radius: 10px;
-      border: 3px solid black;
-    }
-  </style>
-  <script type="text/javascript" src="quotes.js"></script>
-  <script>
-    var LEFT = 'left';
-    var RIGHT = 'right';
-    var leftCharacter = {};
-    var rightCharacter = {};
-    var objectionObjects = [];
-    var characterPics = {
-      phoenix: {
-        picture: "phoenix.gif",
-        facing: RIGHT
-      },
-      miles: {
-        picture: "miles.gif",
-        facing: LEFT
-      },
-      manfred: {
-        picture: "manfred.gif",
-        facing: LEFT
-      },
-      franziska: {
-        picture: "franziska.gif",
-        facing: LEFT
-      },
-      godot: {
-        picture: "godot.gif",
-        facing: LEFT
-      },
-      mia: {
-        picture: "mia.gif",
-        facing: RIGHT
-      },
-      calisto: {
-        picture: "calisto.gif",
-        facing: LEFT
-      },
-      quercus: {
-        picture: "quercus.gif",
-        facing: LEFT
-      },
-      jacques: {
-        picture: "jacques.gif",
-        facing: LEFT
-      },
-      klavier: {
-        picture: "klavier.gif",
-        facing: LEFT
-      },
-      kristoph: {
-        picture: "kristoph.gif",
-        facing: LEFT
-      },
-      calisto: {
-        picture: "calisto.gif",
-        facing: LEFT
-      },
-      winston: {
-        picture: "winston.gif",
-        facing: LEFT
-      },
-      apollo: {
-        picture: "apollo.gif",
-        facing: RIGHT
-      }
-    }
-
-    var nextPosition = LEFT;
-    var nextDiv = 'leftCharacter';
-
-    function getRandomInteger(max, previousRandom) {
-      var random = Math.floor(Math.random() * Math.abs(max));
-      if (previousRandom === random && max > 0) {
-        return getRandomInteger(max, previousRandom);
-      }
-      return random;
-    }
-
-    function replaceImgElement(objectionObject, div) {
-      var img=document.createElement('img');
-      img.setAttribute('src', 'pictures/' + objectionObject.picture);
-      img.setAttribute('height', '200');
-      if (nextPosition === objectionObject.facing) {
-        img.style.transform = 'rotateY(180deg)';
-      }
-      div.replaceChild(img, div.firstChild);
-    }
-
-    var previousRandomCharacterId = null;
-    function prepareNextObjection() {
-      setTimeout(function() {
-        var requiredDivId = (nextPosition === LEFT) ? 'leftCharacter' : 'rightCharacter';
-        var randomCharacterId = getRandomInteger(objectionObjects.length, previousRandomCharacterId);
-        var objectionObject = objectionObjects[randomCharacterId];
-        previousRandomCharacterId = randomCharacterId;
-
-        replaceImgElement(objectionObject, document.getElementById(requiredDivId));
-        objectionObject.audioElement.play();
-
-        if (nextPosition === LEFT) {
-          document.getElementById('leftQuote').textContent = quotes[Math.floor(Math.random() * quotes.length)];
-          nextPosition = RIGHT;
-          nextDiv = 'rightCharacter';
-        } else {
-          document.getElementById('rightQuote').textContent = quotes[Math.floor(Math.random() * quotes.length)];
-          nextPosition = LEFT;
-          nextDiv = 'leftCharacter';
-        }
-        prepareNextObjection();
-      }, Math.random() * 13000 + 2000)
-    }
-
-    document.addEventListener("DOMContentLoaded", function() {
-      audioElementsNodeList = document.getElementsByTagName('audio');
-      for (var i = 0; i < audioElementsNodeList.length; i++) {
-        character = audioElementsNodeList[i].className;
-        objectionObjects.push({
-          audioElement: audioElementsNodeList[i],
-          picture: characterPics[character].picture,
-          facing: characterPics[character].facing
-        });
-        audioElementsNodeList[i].addEventListener('play', function() {
-          document.getElementById('objection').className = 'big';
-        });
-        audioElementsNodeList[i].addEventListener('pause', function() {
-          document.getElementById('objection').className = 'small';
-        });
-      }
-
-      prepareNextObjection();
-    });
-
-  
-  </script>
+  <meta charset='utf-8'> </meta>
+  <link type="text/css" href="objection.css" rel="stylesheet" />
+  <script src="quotes.js"></script>
+  <script src="english.js"></script>
 </head>
 <body>
   <header style="text-align:center;">
@@ -162,8 +16,8 @@
     <img id="objection" class="small" src="pictures/objection.png" height="250" />
     <span id="rightCharacter"><img src="pictures/badger.gif" height="250" /></span>
   </div>
-  <div class="quote" style="float: left; text-align:left; width:45%;" id="leftQuote"></div>
-  <div class="quote" style="float: right; text-align:right; width:45%;" id="rightQuote"></div>
+  <div class="quote left" id="leftQuote"></div>
+  <div class="quote right" id="rightQuote"></div>
   <div>
     <audio class="quercus" src="english/objection (1).wav">No audio tag support in your browser :(</audio>
     <audio class="apollo" src="english/objection (2).wav">No audio tag support in your browser :(</audio>
