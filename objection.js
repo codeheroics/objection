@@ -5,59 +5,59 @@ var rightCharacter = {};
 var objectionObjects = [];
 var characterPics = {
   phoenix: {
-    picture: "phoenix.gif",
+    path: "phoenix.gif",
     facing: RIGHT
   },
   miles: {
-    picture: "miles.gif",
+    path: "miles.gif",
     facing: LEFT
   },
   manfred: {
-    picture: "manfred.gif",
+    path: "manfred.gif",
     facing: LEFT
   },
   franziska: {
-    picture: "franziska.gif",
+    path: "franziska.gif",
     facing: LEFT
   },
   godot: {
-    picture: "godot.gif",
+    path: "godot.gif",
     facing: LEFT
   },
   mia: {
-    picture: "mia.gif",
+    path: "mia.gif",
     facing: RIGHT
   },
   calisto: {
-    picture: "calisto.gif",
+    path: "calisto.gif",
     facing: LEFT
   },
   quercus: {
-    picture: "quercus.gif",
+    path: "quercus.gif",
     facing: LEFT
   },
   jacques: {
-    picture: "jacques.gif",
+    path: "jacques.gif",
     facing: LEFT
   },
   klavier: {
-    picture: "klavier.gif",
+    path: "klavier.gif",
     facing: LEFT
   },
   kristoph: {
-    picture: "kristoph.gif",
+    path: "kristoph.gif",
     facing: LEFT
   },
   calisto: {
-    picture: "calisto.gif",
+    path: "calisto.gif",
     facing: LEFT
   },
   winston: {
-    picture: "winston.gif",
+    path: "winston.gif",
     facing: LEFT
   },
   apollo: {
-    picture: "apollo.gif",
+    path: "apollo.gif",
     facing: RIGHT
   }
 }
@@ -74,8 +74,7 @@ function getRandomInteger(max, previousRandom) {
 }
 
 function replaceImgElement(objectionObject, div) {
-  var img=document.createElement('img');
-  img.setAttribute('src', 'pictures/' + objectionObject.picture);
+  var img = objectionObject.image;
   img.setAttribute('height', '200');
   if (nextPosition === objectionObject.facing) {
     img.style.transform = 'rotateY(180deg)';
@@ -107,13 +106,24 @@ function prepareNextObjection() {
   }, Math.random() * 13000 + 2000)
 }
 
+function loadPictures() {
+  for (var i in characterPics) {
+    if (!characterPics.hasOwnProperty(i)) continue;
+
+    var img = new Image();
+    img.src = 'pictures/' + characterPics[i].path;
+    characterPics[i].image = img;
+  }
+}
+
 document.addEventListener("DOMContentLoaded", function() {
   audioElementsNodeList = document.getElementsByTagName('audio');
+  loadPictures();
   for (var i = 0; i < audioElementsNodeList.length; i++) {
     character = audioElementsNodeList[i].className;
     objectionObjects.push({
       audioElement: audioElementsNodeList[i],
-      picture: characterPics[character].picture,
+      image: characterPics[character].image,
       facing: characterPics[character].facing
     });
     audioElementsNodeList[i].addEventListener('play', function() {
