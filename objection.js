@@ -78,6 +78,8 @@ function replaceImgElement(objectionObject, div) {
   img.setAttribute('height', '200');
   if (nextPosition === objectionObject.facing) {
     img.style.transform = 'rotateY(180deg)';
+  } else {
+    img.style.transform = '';
   }
   div.replaceChild(img, div.firstChild);
 }
